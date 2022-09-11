@@ -1,0 +1,18 @@
+server:
+  port: 8088
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  #minio??
+  minio:
+    access-key: admin      #key??docker????????????
+    secret-key: 12345678
+    url: http://192.168.10.128:9000
+    bucket-name: roker
+    preview-expiry: 24 #???????? ??????
+  thymeleaf:
+    cache: false
+

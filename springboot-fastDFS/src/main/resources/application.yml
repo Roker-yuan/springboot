@@ -1,0 +1,30 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: fastdfs
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+# ===================================
+# FastDFS??
+# ===================================
+fdfs:
+  connect-timeout: 600
+  so-timeout: 1500
+  thumb-image:
+    height: 150
+    width: 150
+# tracker?????????????????IP???????
+  tracker-list: 192.168.10.128:22122
+  pool:
+    jmx-enabled: false
+
