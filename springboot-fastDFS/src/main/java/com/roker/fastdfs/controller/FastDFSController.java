@@ -1,6 +1,7 @@
 package com.roker.fastdfs.controller;
 
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
+import com.roker.fastdfs.config.DFSProperties;
 import com.roker.fastdfs.config.NonStaticResourceHttpRequestHandler;
 import com.roker.fastdfs.utils.FastDFSUtil;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.WatchService;
 
 @RestController
 @AllArgsConstructor
@@ -26,6 +28,9 @@ public class FastDFSController {
 
     @Autowired
     private FastDFSUtil fastDFSUtil;
+
+    @Autowired
+    private DFSProperties dfsProperties;
 
     @RequestMapping(value = "/uploadFiles",headers="content-type=multipart/form-data", method = RequestMethod.POST)
 
@@ -65,7 +70,7 @@ public class FastDFSController {
         //sourcePath 是获取resources文件夹的绝对地址
         //realPath 即是视频所在的磁盘地址
 //        String sourcePath = ClassUtils.getDefaultClassLoader().getResource("").getPath().substring(1);
-        String sourcePath = "http://39.105.212.1:9999/";
+        String sourcePath = dfsProperties.getSourcePath();
         String realPath = sourcePath +path;
 
 
