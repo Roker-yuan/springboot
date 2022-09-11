@@ -6,12 +6,12 @@ import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
- 
+
 /**
- * @Author : Roker
- * @CreateTime : 2022/9/3
- * @Description :
- **/
+ * @作者: Roker
+ * @时间: 2022/9/11 21:54
+ * @Copyright: Don`t be the same,be better!
+ */
 @Configuration
 public class DirectRabbitConfig {
  
