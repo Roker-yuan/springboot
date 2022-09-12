@@ -1,4 +1,4 @@
-package com.roker.consumer.config;
+package com.roker.provider.config;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;

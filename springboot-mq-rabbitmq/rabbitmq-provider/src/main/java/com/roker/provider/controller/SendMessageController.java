@@ -74,5 +74,37 @@ public class SendMessageController {
         rabbitTemplate.convertAndSend("fanoutExchange", null, map);
         return "ok";
     }
+
+    /**
+     * 消息推送到server，但是在server里找不到交换机
+     */
+    @GetMapping("/TestMessageAck")
+    public String TestMessageAck() {
+        String messageId = String.valueOf(UUID.randomUUID());
+        String messageData = "message: non-existent-exchange test message ";
+        String createTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        Map<String, Object> map = new HashMap<>();
+        map.put("messageId", messageId);
+        map.put("messageData", messageData);
+        map.put("createTime", createTime);
+        rabbitTemplate.convertAndSend("non-existent-exchange", "TestDirectRouting", map);
+        return "ok";
+    }
+
+    /**
+     * 把消息推送到名为‘lonelyDirectExchange’的交换机上（这个交换机是没有任何队列配置的）：
+     */
+    @GetMapping("/TestMessageAck2")
+    public String TestMessageAck2() {
+        String messageId = String.valueOf(UUID.randomUUID());
+        String messageData = "message: lonelyDirectExchange test message ";
+        String createTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        Map<String, Object> map = new HashMap<>();
+        map.put("messageId", messageId);
+        map.put("messageData", messageData);
+        map.put("createTime", createTime);
+        rabbitTemplate.convertAndSend("lonelyDirectExchange", "TestDirectRouting", map);
+        return "ok";
+    }
  
 }

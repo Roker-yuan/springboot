@@ -40,11 +40,14 @@ public class DirectRabbitConfig {
         return BindingBuilder.bind(TestDirectQueue()).to(TestDirectExchange()).with("TestDirectRouting");
     }
 
+    /**
+     * 新增一个交换机，但是不给这个交换机绑定队列，我来简单地在DirectRabitConfig里面新增一个直连交换机，名叫‘lonelyDirectExchange’，但没给它做任何绑定配置操作：
+     */
     @Bean
     DirectExchange lonelyDirectExchange() {
         return new DirectExchange("lonelyDirectExchange");
     }
- 
- 
- 
+
+
+
 }
