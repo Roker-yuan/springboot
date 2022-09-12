@@ -12,7 +12,7 @@ spring:
     password: root
     #??host ?????,??server??host
     virtual-host: roker
-    #确认消息已发送到交换机(Exchange)
+    #确认消息已发送到交换机(Exchange) 可以在回调函数根据需求做对应的扩展或者业务数据处理
     #publisher-confirms: true
     publisher-confirm-type: correlated
     #确认消息已发送到队列(Queue)

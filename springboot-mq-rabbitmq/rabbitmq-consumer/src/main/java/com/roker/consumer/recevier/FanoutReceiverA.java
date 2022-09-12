@@ -9,7 +9,7 @@ import java.util.Map;
  * @时间: 2022/9/11 21:54
  * @Copyright: Don`t be the same,be better!
  */
-@Component
+//@Component
 @RabbitListener(queues = "fanout.A")
 public class FanoutReceiverA {
  

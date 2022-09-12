@@ -10,7 +10,7 @@ import java.util.Map;
  * @时间: 2022/9/11 21:12
  * @Copyright: Don`t be the same,be better!
  */
-@Component
+//@Component
 @RabbitListener(queues = "TestDirectQueue")//监听的队列名称 TestDirectQueue
 public class DirectReceiver {
  
