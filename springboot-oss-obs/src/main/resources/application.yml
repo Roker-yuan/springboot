@@ -1,0 +1,12 @@
+server:
+  port: 8096
+
+#obs
+huawei:
+  obs:
+    ak: xxx
+    sk: xxx
+    upload:
+      endPoint: obs.xxx.myhuaweicloud.com
+    bucketName: roker
+    parentDir:  xxx
