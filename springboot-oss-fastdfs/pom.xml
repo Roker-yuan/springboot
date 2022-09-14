@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.roker</groupId>
-    <artifactId>springboot-fastDFS</artifactId>
+    <artifactId>springboot-oss-fastdfs</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springboot-fastDFS</name>
-    <description>springboot-fastDFS</description>
+    <name>springboot-oss-fastdfs</name>
+    <description>springboot-oss-fastdfs</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
