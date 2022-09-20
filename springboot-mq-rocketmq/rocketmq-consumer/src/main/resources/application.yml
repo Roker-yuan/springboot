@@ -1,0 +1,12 @@
+server:
+  port: 9099
+spring:
+  application:
+    name: rocketmq-consumer
+
+rocketmq:
+  name-server: 192.168.10.128:9876          # rocketMQ的名称服务器，格式为:' host:port;host:port '。
+  # 消费端配置
+#  consumer:
+#    access-key: access-key            #如果开启了acl，一定要配置。否则集群模式下会正常，广播模式消费端会失效！
+#    secret-key: secret-key            #如果开启了acl，一定要配置。否则集群模式下会正常，广播模式消费端会失效！

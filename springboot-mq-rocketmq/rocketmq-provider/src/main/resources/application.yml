@@ -1,0 +1,13 @@
+server:
+  port: 9066
+spring:
+  application:
+    name: rocketmq-producer
+
+rocketmq:
+  name-server: 192.168.10.128:9876          # rocketMQ的名称服务器，格式为:' host:port;host:port '。
+  # 生产端配置
+  producer:
+    group: ${spring.application.name}  # 生产着组名
+    #access-key: access-key            # rocketMQ服务端配置acl授权信息，没有则不需要
+    #secret-key: secret-key            # rocketMQ服务端配置acl授权信息，没有则不需要
