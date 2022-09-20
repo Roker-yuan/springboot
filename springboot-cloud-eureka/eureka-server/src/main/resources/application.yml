@@ -1,0 +1,27 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eureka-server
+  security:
+    user:
+      name: roker
+      password: roker
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    instance-id: http://localhost:${server.port}
+    ip-address: 115.227.110.36 #服务所在服务器的外网地址
+  client:
+    registerWithEureka: false #不向注册中心注册自己
+    fetchRegistry: false  #自己是注册中心，不用获取注册表
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+
+
+
+
