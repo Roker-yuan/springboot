@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="ask_for_leave" name="ask_for_leave" isExecutable="true">
+    <startEvent id="leaveStart" name="开始"/>
+    <userTask id="askTask" name="请假申请人"/>
+    <sequenceFlow id="startFlow" sourceRef="leaveStart" targetRef="askTask"/>
+    <userTask id="leaderTask" name="组长审批"/>
+    <sequenceFlow id="leaderFlow" sourceRef="askTask" targetRef="leaderTask"/>
+    <exclusiveGateway id="leaderJudgeNode"/>
+    <sequenceFlow id="leaderApproval" sourceRef="leaderTask" targetRef="leaderJudgeNode"/>
+    <userTask id="managerTask" name="经理审批"/>
+    <sequenceFlow id="leaderPass" sourceRef="leaderJudgeNode" targetRef="managerTask" name="通过">
+      <conditionExpression xsi:type="tFormalExpression">checkResult=='Y'</conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway id="managerJudgeNode"/>
+    <sequenceFlow id="managerApproval" sourceRef="managerTask" targetRef="managerJudgeNode"/>
+    <endEvent id="LeaveEnd"/>
+    <sequenceFlow id="managerPass" sourceRef="managerJudgeNode" targetRef="LeaveEnd" name="通过">
+      <conditionExpression xsi:type="tFormalExpression">checkResult=='Y'</conditionExpression>
+    </sequenceFlow>
+    <serviceTask id="sendMail" flowable:exclusive="true" name="发送失败提示" isForCompensation="true" flowable:class="com.roker.springbootflowflowable.controller.ProcessChartController"/>
+    <sequenceFlow id="leaderReject" sourceRef="leaderJudgeNode" targetRef="sendMail" name="拒绝">
+      <conditionExpression xsi:type="tFormalExpression">checkResult=='N'</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="managerReject" sourceRef="managerJudgeNode" targetRef="sendMail" name="驳回">
+      <conditionExpression xsi:type="tFormalExpression">checkResult=='N'</conditionExpression>
+    </sequenceFlow>
+    <endEvent id="LeaveFail"/>
+    <sequenceFlow id="failFlow" sourceRef="sendMail" targetRef="LeaveFail"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_ask_for_leave.bpmn20">
+    <bpmndi:BPMNPlane bpmnElement="ask_for_leave.bpmn20" id="BPMNPlane_ask_for_leave.bpmn20">
+      <bpmndi:BPMNShape id="shape-d5da6db6-a7cf-4eaf-ada0-c9e307d63703" bpmnElement="leaveStart">
+        <omgdc:Bounds x="-775.0" y="-510.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-6bff2b1e-19f4-4cea-8928-d5a293bf5706" bpmnElement="askTask">
+        <omgdc:Bounds x="-680.0" y="-535.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-d55b425f-2f72-4f27-a841-fbb8d1e9a7c2" bpmnElement="startFlow">
+        <omgdi:waypoint x="-745.0" y="-495.0"/>
+        <omgdi:waypoint x="-680.0" y="-495.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-d9975f63-5295-4632-b8ec-864a9a0ec89d" bpmnElement="leaderTask">
+        <omgdc:Bounds x="-495.0" y="-535.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-6a11706a-84c4-4918-92ee-8191dc743e48" bpmnElement="leaderFlow">
+        <omgdi:waypoint x="-580.0" y="-495.0"/>
+        <omgdi:waypoint x="-495.0" y="-495.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-81bc7353-324c-4d09-88dd-688151be69c4" bpmnElement="leaderJudgeNode">
+        <omgdc:Bounds x="-340.0" y="-515.0" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-3fe6513a-80ed-435d-8e92-e47b9a1b125e" bpmnElement="leaderApproval">
+        <omgdi:waypoint x="-395.0" y="-495.0"/>
+        <omgdi:waypoint x="-340.0" y="-495.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-9da26526-edd5-4858-9977-c262cb24c475" bpmnElement="managerTask">
+        <omgdc:Bounds x="-215.0" y="-535.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-40914ab2-8cd9-4a70-bf35-92170469f4a6" bpmnElement="leaderPass">
+        <omgdi:waypoint x="-300.0" y="-495.0"/>
+        <omgdi:waypoint x="-215.0" y="-495.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-16a747ba-d03d-4d0c-9d56-e255dc2d3479" bpmnElement="managerJudgeNode">
+        <omgdc:Bounds x="-45.0" y="-515.0" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-dc39bb19-bc8c-4f40-8afd-aa0ea8a2d7c8" bpmnElement="managerApproval">
+        <omgdi:waypoint x="-115.0" y="-495.0"/>
+        <omgdi:waypoint x="-45.0" y="-495.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-6198d932-60e0-4db6-846b-23dc4ec94746" bpmnElement="LeaveEnd">
+        <omgdc:Bounds x="75.0" y="-510.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-9f37e00d-5695-4843-b398-4b7d6a5e2d07" bpmnElement="managerPass">
+        <omgdi:waypoint x="-5.0" y="-495.0"/>
+        <omgdi:waypoint x="75.0" y="-495.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-aeee62cf-e344-4421-8d5b-883a6f6e9980" bpmnElement="sendMail">
+        <omgdc:Bounds x="-370.0" y="-350.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-3680fafe-c022-45be-bd41-9559edfc158d" bpmnElement="leaderReject">
+        <omgdi:waypoint x="-320.0" y="-475.0"/>
+        <omgdi:waypoint x="-320.0" y="-350.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-18e8c958-e88a-4166-bf19-bb61806b5ba1" bpmnElement="managerReject">
+        <omgdi:waypoint x="-25.0" y="-475.0"/>
+        <omgdi:waypoint x="-25.0" y="-310.0"/>
+        <omgdi:waypoint x="-270.00003" y="-310.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-162c3f9d-417c-4274-8135-a42fe3f37fe3" bpmnElement="LeaveFail">
+        <omgdc:Bounds x="-500.0" y="-325.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-9759c742-bdba-4e97-9e60-9a7390e87cb9" bpmnElement="failFlow">
+        <omgdi:waypoint x="-370.0" y="-310.0"/>
+        <omgdi:waypoint x="-470.0" y="-310.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

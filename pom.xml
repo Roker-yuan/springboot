@@ -6,6 +6,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>springboot-mq-rabbitmq</module>
+        <module>springboot-mq-rocketmq</module>
+        <module>springboot-eureka</module>
+        <module>springboot-cloud-eureka</module>
     </modules>
 
     <parent>
