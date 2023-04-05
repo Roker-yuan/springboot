@@ -2,7 +2,7 @@ server:
   port: 8520
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/flowable?serverTime=Asia/Shanghai&useSSL=false&nullCatalogMeansCurrent=true
+    url: jdbc:mysql://rm-2zen05o16r8r0tnudlo.mysql.rds.aliyuncs.com:3306/roker?serverTime=Asia/Shanghai&useSSL=false&nullCatalogMeansCurrent=true
     username: root
-    password: root
+    password: yuan@9826
 
