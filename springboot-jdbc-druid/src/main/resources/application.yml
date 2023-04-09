@@ -1,0 +1,92 @@
+spring:
+  datasource:
+    #类型
+    type: com.alibaba.druid.pool.DruidDataSource
+    #驱动
+#    driverClassName: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    platform: mysql
+    #数据库连接
+    url: jdbc:mysql://rm-2zen05o16r8r0tnudlo.mysql.rds.aliyuncs.com:3306/roker?serverTime=Asia/Shanghai&useSSL=false&nullCatalogMeansCurrent=true
+    username: root
+    password: yuan@9826
+    connect-properties:
+      config.decrypt: true
+      config.decrypt.key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAK7Q/BdNOobpnjGTs5DRb6/K/obb3ptYLMYp7kPixp66XtVQ4YWd8hKER1wOH7c6Wgz5P95BPlpwqs7nN40ldlcCAwEAAQ==
+    #连接池配置
+    druid:
+      #初始化连接池大小
+      initialSize: 10
+      #最大空闲值.当经过一个高峰时间后，连接池可以慢慢将已经用不到的连接慢慢释放一部分，一直减少到maxIdle为止
+      minIdle: 1
+      #最大活跃数
+      maxActive: 50
+      #最大建立连接等待时间。如果超过此时间将接到异常。设为－1表示无限制
+      maxWait: 60000
+      #失效检查线程运行时间间隔，要小于MySQL默认
+      timeBetweenEvictionRunsMillis: 60000
+      #连接的超时时间，默认为半小时
+      minEvictableIdleTimeMillis: 300000
+      #检查连接有效性的SQL语句
+      validationQuery: SELECT 1 FROM dual
+      #检查连接是否有效
+      testWhileIdle: true
+      testOnBorrow: true
+      testOnReturn: false
+      # 打开 PSCache，并且指定每个连接上 PSCache 的大小
+      #开启池的prepared statement 池功能
+      poolPreparedStatements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      #statement池能够同时分配的打开的statements的最大数量
+      maxOpenPreparedStatements: 50
+      # 通过 connection-properties 属性打开 mergeSql 功能；慢 SQL 记录
+      connection-properties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+      #开启StatFilter
+      filter:
+        stat:
+          enabled: true         # 开启DruidDataSource状态监控
+          db-type: mysql        # 数据库的类型
+          log-slow-sql: true    # 开启慢SQL记录功能
+          slow-sql-millis: 2000 # 默认3000毫秒，这里超过2s，就是慢，记录到日志
+          #开启Slf4jFilter,使用logback时注释
+        slf4j:
+          enabled: true
+          data-source-log-enabled: false
+          connection-log-enabled: false
+          statement-log-enabled: false
+          result-set-log-enabled: false
+        #开启WallFilter
+        wall:
+          enabled: true
+          log-violation: true
+          throw-exception: false
+          config:
+            delete-where-none-check: true
+
+        exclusions: /druid/*,*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico
+        url-pattern: /*
+      #开启监控页面
+      stat-view-servlet:
+        # 需要设置enabled=true,否则会报出There was an unexpected error (type=Not Found, status=404).错误，
+        # 或者将druid-spring-boot-starter的版本降低到1.1.10及以下
+        # 是否启用StatViewServlet（监控页面）默认值为false（考虑到安全问题默认并未启动，如需启用建议设置密码或白名单以保障安全）
+        enabled: true
+        login-username: admin
+        login-password: admin123
+        url-pattern: /druid/*
+        # IP 白名单，没有配置或者为空，则允许所有访问
+        allow: 127.0.0.1
+        # IP 黑名单，若白名单也存在，则优先使用
+        deny: 192.168.31.253
+        # 禁用 HTML 中 Reset All 按钮
+        reset-enable: false
+
+      ########## 配置WebStatFilter，用于采集web关联监控的数据 ##########
+      web-stat-filter:
+        enabled: true                   # 启动 StatFilter
+        url-pattern: /*                 # 过滤所有url
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" # 排除一些不必要的url
+        session-stat-enable: true       # 开启session统计功能
+        session-stat-max-count: 1000    # session的最大个数,默认100
+        # 开启 spring 监控
+      aop-patterns: "com.roker.springbootjdbcdruid.mapper.*"
